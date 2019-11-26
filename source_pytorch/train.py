@@ -58,11 +58,11 @@ def train(model, train_loader, epochs, criterion, optimizer, device):
     model        - The PyTorch model that we wish to train.
     train_loader - The PyTorch DataLoader that should be used during training.
     epochs       - The total number of epochs to train for.
-    criterion    - The loss function used for training. 
+    criterion    - The loss function used for training.
     optimizer    - The optimizer to use during training.
     device       - Where the model and data should be loaded (gpu or cpu).
     """
-    
+
     # training loop is provided
     for epoch in range(1, epochs + 1):
         model.train() # Make sure that the model is in training mode.
@@ -80,12 +80,12 @@ def train(model, train_loader, epochs, criterion, optimizer, device):
 
             # get predictions from model
             y_pred = model(batch_x)
-            
+
             # perform backprop
             loss = criterion(y_pred, batch_y)
             loss.backward()
             optimizer.step()
-            
+
             total_loss += loss.data.item()
 
         print("Epoch: {}, Loss: {}".format(epoch, total_loss / len(train_loader)))
@@ -93,10 +93,10 @@ def train(model, train_loader, epochs, criterion, optimizer, device):
 
 ## TODO: Complete the main code
 if __name__ == '__main__':
-    
+
     # All of the model parameters and training parameters are sent as arguments
     # when this script is executed, during a training job
-    
+
     # Here we set up an argument parser to easily access the parameters
     parser = argparse.ArgumentParser()
 
@@ -105,7 +105,7 @@ if __name__ == '__main__':
     parser.add_argument('--output-data-dir', type=str, default=os.environ['SM_OUTPUT_DATA_DIR'])
     parser.add_argument('--model-dir', type=str, default=os.environ['SM_MODEL_DIR'])
     parser.add_argument('--data-dir', type=str, default=os.environ['SM_CHANNEL_TRAIN'])
-    
+
     # Training Parameters, given
     parser.add_argument('--batch-size', type=int, default=10, metavar='N',
                         help='input batch size for training (default: 10)')
@@ -113,11 +113,17 @@ if __name__ == '__main__':
                         help='number of epochs to train (default: 10)')
     parser.add_argument('--seed', type=int, default=1, metavar='S',
                         help='random seed (default: 1)')
-    
+
     ## TODO: Add args for the three model parameters: input_features, hidden_dim, output_dim
     # Model Parameters
-    
-    
+    parser.add_argument('--input_features', type=int, default=32, metavar='N',
+                        help='size of the input_features (default: 32)')
+    parser.add_argument('--hidden_dim', type=int, default=100, metavar='N',
+                        help='size of the hidden dimension (default: 100)')
+    parser.add_argument('--output_dim', type=int, default=1, metavar='N',
+                        help='size of the output_dim (default: 1)')
+
+
     # args holds all passed-in arguments
     args = parser.parse_args()
 
@@ -131,32 +137,32 @@ if __name__ == '__main__':
 
 
     ## --- Your code here --- ##
-    
+
     ## TODO:  Build the model by passing in the input params
     # To get params from the parser, call args.argument_name, ex. args.epochs or ards.hidden_dim
     # Don't forget to move your model .to(device) to move to GPU , if appropriate
-    model = None
+    model = BinaryClassifier(args.input_features, args.hidden_dim, args.output_dim).to(device)
 
     ## TODO: Define an optimizer and loss function for training
-    optimizer = None
-    criterion = None
+    optimizer = optim.Adam(model.parameters())
+    criterion = torch.nn.BCELoss()
 
     # Trains the model (given line of code, which calls the above training function)
     train(model, train_loader, args.epochs, criterion, optimizer, device)
 
     ## TODO: complete in the model_info by adding three argument names, the first is given
-    # Keep the keys of this dictionary as they are 
+    # Keep the keys of this dictionary as they are
     model_info_path = os.path.join(args.model_dir, 'model_info.pth')
     with open(model_info_path, 'wb') as f:
         model_info = {
             'input_features': args.input_features,
-            'hidden_dim': <add_arg>,
-            'output_dim': <add_arg>,
+            'hidden_dim': args.hidden_dim,
+            'output_dim': args.output_dim
         }
         torch.save(model_info, f)
-        
+
     ## --- End of your code  --- ##
-    
+
 
 	# Save the model parameters
     model_path = os.path.join(args.model_dir, 'model.pth')
