@@ -10,7 +10,6 @@ from model import BinaryClassifier
 # default content type is numpy array
 NP_CONTENT_TYPE = 'application/x-npy'
 
-
 # Provided model load function
 def model_fn(model_dir):
     """Load the PyTorch model from the `model_dir` directory."""
@@ -39,7 +38,6 @@ def model_fn(model_dir):
     print("Done loading model.")
     return model
 
-
 # Provided input data loading
 def input_fn(serialized_input_data, content_type):
     print('Deserializing the input data.')
@@ -57,13 +55,12 @@ def output_fn(prediction_output, accept):
         return stream.getvalue(), accept
     raise Exception('Requested unsupported ContentType in Accept: ' + accept)
 
-
 # Provided predict function
 def predict_fn(input_data, model):
     print('Predicting class labels for the input data...')
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    
+
     # Process input_data so that it is ready to be sent to our model.
     data = torch.from_numpy(input_data.astype('float32'))
     data = data.to(device)
@@ -72,9 +69,9 @@ def predict_fn(input_data, model):
     model.eval()
 
     # Compute the result of applying the model to the input data
-    # The variable `out_label` should be a rounded value, either 1 or 0
-    out = model(data)
-    out_np = out.cpu().detach().numpy()
-    out_label = out_np.round()
+    with torch.no_grad():
+        output = model.forward(data)
+
+    out_label = np.round(output.numpy())
 
     return out_label
