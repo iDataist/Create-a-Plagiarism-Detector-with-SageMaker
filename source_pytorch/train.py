@@ -90,8 +90,6 @@ def train(model, train_loader, epochs, criterion, optimizer, device):
 
         print("Epoch: {}, Loss: {}".format(epoch, total_loss / len(train_loader)))
 
-
-## TODO: Complete the main code
 if __name__ == '__main__':
 
     # All of the model parameters and training parameters are sent as arguments
@@ -122,7 +120,6 @@ if __name__ == '__main__':
     parser.add_argument('--output_dim', type=int, default=1, metavar='N',
                         help='size of the output_dim (default: 1)')
 
-
     # args holds all passed-in arguments
     args = parser.parse_args()
 
@@ -133,9 +130,6 @@ if __name__ == '__main__':
 
     # Load the training data.
     train_loader = _get_train_data_loader(args.batch_size, args.data_dir)
-
-
-    ## --- Your code here --- ##
 
     ## Build the model by passing in the input params
     model = BinaryClassifier(args.input_features, args.hidden_dim, args.output_dim).to(device)
@@ -157,9 +151,6 @@ if __name__ == '__main__':
             'output_dim': args.output_dim
         }
         torch.save(model_info, f)
-
-    ## --- End of your code  --- ##
-
 
 	# Save the model parameters
     model_path = os.path.join(args.model_dir, 'model.pth')
