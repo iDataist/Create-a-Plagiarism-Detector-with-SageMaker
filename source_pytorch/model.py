@@ -24,7 +24,7 @@ class BinaryClassifier(nn.Module):
         super(BinaryClassifier, self).__init__()
 
         # defining 2 linear layers
-        self.fc1 = nn.Linear(input_dim, hidden_dim)
+        self.fc1 = nn.Linear(input_features, hidden_dim)
         self.fc2 = nn.Linear(hidden_dim, output_dim)
         self.drop = nn.Dropout(0.3)
         # sigmoid layer
