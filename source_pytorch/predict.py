@@ -69,9 +69,14 @@ def predict_fn(input_data, model):
     model.eval()
 
     # Compute the result of applying the model to the input data
-    with torch.no_grad():
-        output = model.forward(data)
+#     with torch.no_grad():
+#         output = model.forward(data)
 
-    out_label = np.round(output.numpy())
+#     out_label = np.round(output.numpy())
+    
+    # Compute the result of applying the model to the input data.
+    out = model(data)
+    # The variable `result` should be a numpy array; a single value 0-1
+    result = out.cpu().detach().numpy().round()
 
-    return out_label
+    return result
