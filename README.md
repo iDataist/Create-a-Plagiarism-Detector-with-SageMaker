@@ -1,14 +1,25 @@
-# Plagiarism Project, Machine Learning Deployment
-
-This repository contains code and associated files for deploying a plagiarism detector using AWS SageMaker.
+# Create a Plagiarism Dectetor with SageMaker
 
 ## Project Overview
 
-I built a plagiarism detector that examines a text file and performs binary classification; labeling that file as either *plagiarized* or *not*, depending on how similar that text file is to a provided source text. Detecting plagiarism is an active area of research; the task is non-trivial and the differences between paraphrased answers and original work are often not so obvious.
+I built a plagiarism detector that examines a text file and performs binary classification, labeling that file as either *plagiarized* or *not* depending on how similar that text file is to a provided source text. Detecting plagiarism is an active area of research; the task is non-trivial and the differences between paraphrased answers and original work are often not so obvious.
 
-This project are broken down into three main notebooks:
+## Key Skills Demonstrated
+- Clean and pre-process the text data
+- Feature Engineering and Selection
+- Deploy a machine learning model with SageMaker
+
+## Data
+
+The data is a slightly modified version of a dataset created by Paul Clough (Information Studies) and Mark Stevenson (Computer Science), at the University of Sheffield. You can read all about the data collection and corpus, at [their university webpage](https://ir.shef.ac.uk/cloughie/resources/plagiarism_corpus.html).
+
+> **Citation for data**: Clough, P. and Stevenson, M. Developing A Corpus of Plagiarised Short Answers, Language Resources and Evaluation: Special Issue on Plagiarism and Authorship Analysis, In Press. [Download]
+
+## Project Steps
+This project are broken down into three main steps/notebooks:
 
 **Notebook 1: Data Exploration**
+
 * Load in the corpus of plagiarism text data.
 * Explore the existing data features and the data distribution.
 
