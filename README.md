@@ -1,4 +1,4 @@
-# Create a Plagiarism Dectetor with SageMaker
+# Create a Plagiarism Detector with SageMaker
 
 ## Project Overview
 
