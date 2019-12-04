@@ -5,9 +5,9 @@
 I built a plagiarism detector that examines a text file and performs binary classification, labeling that file as either *plagiarized* or *not* depending on how similar that text file is to a provided source text. Detecting plagiarism is an active area of research; the task is non-trivial and the differences between paraphrased answers and original work are often not so obvious.
 
 ## Key Skills Demonstrated
-- Clean and pre-process the text data
-- Feature Engineering and Selection
-- Deploy a machine learning model with SageMaker
+- Feature engineering
+- Model design and evaluation
+- Model deployment via SageMaker
 
 ## Data
 
